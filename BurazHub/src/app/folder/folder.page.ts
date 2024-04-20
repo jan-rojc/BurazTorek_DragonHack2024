@@ -4,6 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { BleClient, BleDevice, textToDataView, numbersToDataView } from '@capacitor-community/bluetooth-le';
 import { WeatherService } from '../services/weather.service';
 
+import { CalendarOptions } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import googleCalendarPlugin from '@fullcalendar/google-calendar'
+
 @Component({
   selector: 'app-folder',
   templateUrl: './folder.page.html',
@@ -22,6 +26,22 @@ export class FolderPage implements OnInit {
   loading = false;
   statusMessage = 'Tap the button to start scanning for devices.';
   weatherData: any;
+
+  calendarOptions: CalendarOptions = {
+    plugins: [
+      dayGridPlugin,
+      googleCalendarPlugin
+    ],
+    initialView: 'dayGridMonth',
+    weekends: false,
+    // events: [
+    //   { title: 'Meeting', start: new Date() },
+    // ]
+    events: {
+      googleCalendarId: 'en.slovenian#holiday@group.v.calendar.google.com'
+    },
+    googleCalendarApiKey: 'AIzaSyAr3_1ML6lRcOtvvFh5KXaAS8WzN39LPM4'
+  };
 
   constructor(private weatherService: WeatherService) { }
 
