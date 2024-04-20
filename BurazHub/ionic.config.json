@@ -1,7 +1,0 @@
-{
-  "name": "BurazHub",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
