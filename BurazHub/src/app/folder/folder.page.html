@@ -15,7 +15,13 @@
   </ion-header>
 
   <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <div>{{ statusMessage }}</div>
+    <ion-button (click)="scanForDevices()">Scan</ion-button>
+    <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+    <ion-button *ngIf="companionDevice" (click)="connectToDevice()">Connect to device</ion-button>
+    <ion-button *ngIf="companionDevice" (click)="sendDataToDevice(0)">Blink</ion-button>
+    <ion-button *ngIf="companionDevice" (click)="sendDataToDevice(1)">Toggle</ion-button>
+    <ion-button (click)="getWeather('Ljubljana,Slovenia')">Get weather</ion-button>
+    <div *ngIf="weatherData">Currently in Ljubljana {{ weatherData.current.temp_c }} °C</div>
   </div>
 </ion-content>
