@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"name": "esp32-c3-supermini",
+			"path": ".."
+		}
+	],
+	"settings": {}
+}
