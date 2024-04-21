@@ -5,7 +5,10 @@
 
 
 // Recieveing string commands:
+//  "on"
+//  "off"
 //  "blink"
+//  "diagonal_blink"
 //  "toggle"
 //  "breathe"
 //  "loop_leds"
@@ -15,8 +18,10 @@
 //  "on"
 //  "off"
 //  "blink"
+//  "diagonal_blink"
 //  "breathe"
 //  "loop_leds"
+//  "connected" (animation runs only once and then changes to "off")
 
 
 #define BUTTON_PIN 10
@@ -128,6 +133,49 @@ void loop_leds(int max_value) {
 
 }
 
+void diagonal_blink() {
+  analogWrite(LED1_PIN, 255);
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 255);
+  analogWrite(LED4_PIN, 0);
+  delay(100);
+  analogWrite(LED1_PIN, 0);
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 0);
+  delay(100);
+  analogWrite(LED1_PIN, 255);
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 255);
+  analogWrite(LED4_PIN, 0);
+  delay(100);
+  analogWrite(LED1_PIN, 0);
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 0);
+  delay(200);
+  analogWrite(LED1_PIN, 0);
+  analogWrite(LED2_PIN, 255);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 255);
+  delay(100);
+  analogWrite(LED1_PIN, 0);
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 0);
+  delay(100);
+  analogWrite(LED1_PIN, 0);
+  analogWrite(LED2_PIN, 255);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 255);
+  delay(100);
+  analogWrite(LED1_PIN, 0);
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 0);
+  delay(200);
+}
+
 void connected() {
   Serial.println("Connected");
   analogWrite(LED1_PIN, 255);
@@ -180,6 +228,8 @@ void animation(std::string state) {
     off_leds();
   } else if (state == "blink") {
     blink();
+  } else if (state == "diagonal_blink") {
+    diagonal_blink();
   } else if (state == "breathe") {
     breathe(0, 128);
   } else if (state == "loop_leds") {
@@ -218,9 +268,18 @@ class MyCallbacks: public NimBLECharacteristicCallbacks {
     Serial.print("Received value: ");
     Serial.println(value.c_str());
 
-    if (value == "blink") {
+    if (value == "on") {
+      Serial.println("On LED");
+      animationState = "on";
+    } else if (value == "off") {
+      Serial.println("Off LED");
+      animationState = "off";
+    } else if (value == "blink") {
       Serial.println("Blinking LED");
       animationState = "blink";
+    } else if (value == "diagonal_blink") {
+      Serial.println("Diagonal blinking LED");
+      animationState = "diagonal_blink";
     } else if (value == "toggle") {
       Serial.println("Toggling LED");
       if (animationState == "on") {
@@ -241,6 +300,14 @@ class MyCallbacks: public NimBLECharacteristicCallbacks {
     Serial.println(animationState.c_str());
   }
 };
+
+void sendData(const std::string& data) {
+  if (pCharacteristic && deviceConnected) {
+    pCharacteristic->setValue(data);
+  } else {
+    Serial.println("Failed to send data: Not connected or characteristic unavailable");
+  }
+}
 
 void setup()
 {
@@ -307,6 +374,7 @@ void loop()
     // digitalWrite(LED2_PIN, LOW);
     Serial.println("BUTTON PRESSED (leds off)");
     animationState = "off";
+    sendData("button_pressed");
   }
 
   // } else {
