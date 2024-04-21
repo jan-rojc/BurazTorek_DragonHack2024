@@ -1,0 +1,17 @@
+<div class="container">
+  <h3>smart home</h3>
+  <div class="grid-container">
+    <ion-button size="large" [fill]="isLightOn ? 'solid' : 'outline'" [color]="isLightOn ? 'tertiary' : 'secondary'" (click)="isLightOn = !isLightOn">
+      <ion-icon slot="icon-only" name="bulb" class="home-button"></ion-icon>
+    </ion-button>
+    <ion-button size="large" color="secondary" fill="outline">
+      <ion-icon slot="icon-only" name="tv" class="home-button"></ion-icon>
+    </ion-button>
+    <ion-button size="large" color="secondary" fill="outline">
+      <ion-icon slot="icon-only" name="wifi" class="home-button"></ion-icon>
+    </ion-button>
+    <ion-button size="large" color="secondary" fill="outline">
+      <ion-icon slot="icon-only" name="bulb" class="home-button"></ion-icon>
+    </ion-button>
+  </div>
+</div>

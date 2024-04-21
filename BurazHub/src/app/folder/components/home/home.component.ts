@@ -18,8 +18,4 @@ export class HomeComponent  implements OnInit {
   ngOnInit() {
     // this.statusMessage = this.bleService.statusMessage;
   }
-
-  async sendData(action: string) {
-    this.bleService.sendDataToDevice(action);
-  }
 }

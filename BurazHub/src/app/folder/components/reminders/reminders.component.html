@@ -1,3 +1,28 @@
-<p>
-  reminders works!
-</p>
+<div class="container">
+  <div class="upcoming-reminders">
+    <h3>upcoming reminders</h3>
+    <ion-list>
+      <ion-item>
+        <ion-icon slot="start" name="calendar"></ion-icon>
+        <ion-label>Business meeting</ion-label>
+        <ion-label slot="end">Today 10:00</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="calendar"></ion-icon>
+        <ion-label>Dinner with friends</ion-label>
+        <ion-label slot="end">Tomorrow 19:00</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div class="actions">
+    <h3>set reminder</h3>
+    <ion-button size="small" fill="outline" color="secondary">
+        <ion-icon slot="start" [name]="'square'"></ion-icon>
+        Business meeting | Today 10:00
+    </ion-button>
+    <ion-button size="small" fill="outline" color="secondary">
+        <ion-icon slot="start" [name]="'square'"></ion-icon>
+        Dinner with friends | Tomorrow 19:00
+    </ion-button>
+  </div>
+</div>

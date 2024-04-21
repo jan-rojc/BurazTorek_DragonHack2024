@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { WelcomeScrenComponent } from './welcome-scren/welcome-scren.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'companion',
-    pathMatch: 'full'
+    component: WelcomeScrenComponent
   },
   {
     path: 'companion',

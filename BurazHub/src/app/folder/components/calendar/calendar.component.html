@@ -1,3 +1,20 @@
-<p>
-  calendar works!
-</p>
+<div class="container">
+  <full-calendar [options]="calendarOptions" class="calendar">
+    <ng-template #eventContent let-arg>
+      <b>{{arg.timeText}}</b>
+      <i>{{arg.event.title}}</i>
+    </ng-template>
+  </full-calendar>
+  
+  <div class="actions">
+    <h3>set reminder</h3>
+    <ion-button size="small" fill="outline" color="secondary">
+        <ion-icon slot="start" [name]="'square'"></ion-icon>
+        Business meeting | Today 10:00
+    </ion-button>
+    <ion-button size="small" fill="outline" color="secondary">
+        <ion-icon slot="start" [name]="'square-outline'"></ion-icon>
+        Dinner with friends | Tomorrow 19:00
+    </ion-button>
+  </div>
+</div>

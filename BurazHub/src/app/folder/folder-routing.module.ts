@@ -9,6 +9,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { FavouritesComponent } from './components/favourites/favourites.component';
 import { CustomApiComponent } from './components/custom-api/custom-api.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { SmartHomeComponent } from './components/smart-home/smart-home.component';
+import { WeatherComponent } from './components/weather/weather.component';
 
 const routes: Routes = [
   {
@@ -20,12 +22,20 @@ const routes: Routes = [
         component: HomeComponent
       },
       {
+        path: 'smart-home',
+        component: SmartHomeComponent
+      },
+      {
         path: 'reminders',
         component: RemindersComponent
       },
       {
         path: 'calendar',
         component: CalendarComponent
+      },
+      {
+        path: 'weather',
+        component: WeatherComponent
       },
       {
         path: 'favourites',

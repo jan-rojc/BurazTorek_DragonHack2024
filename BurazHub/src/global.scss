@@ -35,3 +35,21 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+:root {
+    --ion-color-secondary: #ffffff; /* White for primary color */
+    --ion-color-secondary-rgb: 255, 255, 255; /* White in RGB format */
+    --ion-color-secondary-contrast: #000000; /* Black for contrast color */
+    --ion-color-secondary-contrast-rgb: 0, 0, 0; /* Black in RGB format */
+    --ion-color-secondary-shade: #f2f2f2; /* Lighter shade of white */
+    --ion-secondary-tint: #e0e0e0; /* Darker shade of white */    
+}
+
+:root {
+    --ion-color-tertiary: #7f3c8d; /* Base purple color */
+    --ion-color-tertiary-rgb: 127, 60, 141; /* Base purple in RGB format */
+    --ion-color-tertiary-contrast: #ffffff; /* White for contrast color */
+    --ion-color-tertiary-contrast-rgb: 255, 255, 255; /* White in RGB format */
+    --ion-color-tertiary-shade: #6d2c7a; /* Darker shade of purple */
+    --ion-color-tertiary-tint: #9952a3; /* Lighter shade of purple */
+}

@@ -16,6 +16,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { FavouritesComponent } from './components/favourites/favourites.component';
 import { CustomApiComponent } from './components/custom-api/custom-api.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { SmartHomeComponent } from './components/smart-home/smart-home.component';
+import { WeatherComponent } from './components/weather/weather.component';
 
 @NgModule({
   imports: [
@@ -29,6 +31,8 @@ import { SettingsComponent } from './components/settings/settings.component';
     BackboneComponent,
     FolderPage,
     HomeComponent,
+    SmartHomeComponent,
+    WeatherComponent,
     RemindersComponent,
     CalendarComponent,
     FavouritesComponent,

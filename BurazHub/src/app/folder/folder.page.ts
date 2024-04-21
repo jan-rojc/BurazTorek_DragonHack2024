@@ -14,35 +14,9 @@ import googleCalendarPlugin from '@fullcalendar/google-calendar'
   styleUrls: ['./folder.page.scss'],
 })
 export class FolderPage implements OnInit {
-  // BLE Setup
-  
-  weatherData: any;
-
-  calendarOptions: CalendarOptions = {
-    plugins: [
-      dayGridPlugin,
-      googleCalendarPlugin
-    ],
-    initialView: 'dayGridMonth',
-    weekends: false,
-    // events: [
-    //   { title: 'Meeting', start: new Date() },
-    // ]
-    events: {
-      googleCalendarId: 'en.slovenian#holiday@group.v.calendar.google.com'
-    },
-    googleCalendarApiKey: 'AIzaSyAr3_1ML6lRcOtvvFh5KXaAS8WzN39LPM4'
-  };
-
-  constructor(private weatherService: WeatherService) { }
+  constructor() { }
 
   ngOnInit() {
     
-  }
-
-  getWeather(location: string) {
-    this.weatherService.getWeather(location).subscribe((data: any) => {
-      this.weatherData = data;
-    });
   }
 }

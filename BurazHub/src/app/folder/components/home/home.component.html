@@ -1,17 +1,19 @@
-<div id="container">
-  <div>{{ statusMessage }}</div>
+<div class="container">
   <!-- <ion-button (click)="connect()">Scan</ion-button> -->
-  <ion-button (click)="sendData('toggle')">Toggle</ion-button>
-  <!-- <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
-  <ion-button *ngIf="companionDevice" (click)="connectToDevice()">Connect to device</ion-button>
-  <ion-button *ngIf="companionDevice" (click)="sendDataToDevice(0)">Blink</ion-button>
-  <ion-button *ngIf="companionDevice" (click)="sendDataToDevice(1)">Toggle</ion-button> -->
-  <!-- <ion-button (click)="getWeather('Ljubljana,Slovenia')">Get weather</ion-button>
-  <div *ngIf="weatherData">Currently in Ljubljana {{ weatherData.current.temp_c }} °C</div>
-  <full-calendar [options]="calendarOptions">
-    <ng-template #eventContent let-arg>
-      <b>{{arg.timeText}}</b>
-      <i>{{arg.event.title}}</i>
-    </ng-template>
-  </full-calendar> -->
+  <ion-button size="large" color="tertiary" routerLink="/companion/weather">
+    <ion-icon slot="icon-only" name="cloudy-night-outline" class="home-button"></ion-icon>
+  </ion-button>
+  <ion-label class="label">weather</ion-label>
+  <ion-button size="large" color="tertiary" routerLink="/companion/calendar">
+    <ion-icon slot="icon-only" name="calendar-outline" class="home-button"></ion-icon>
+  </ion-button>
+  <ion-label class="label">calendar</ion-label>
+  <ion-button size="large" color="tertiary" routerLink="/companion/reminders">
+    <ion-icon slot="icon-only" name="notifications-outline" class="home-button"></ion-icon>
+  </ion-button>
+  <ion-label class="label">reminders</ion-label>
+  <ion-button size="large" color="tertiary" routerLink="/companion/smart-home">
+    <ion-icon slot="icon-only" name="home-outline" class="home-button"></ion-icon>
+  </ion-button>
+  <ion-label class="label">smart home</ion-label>
 </div>

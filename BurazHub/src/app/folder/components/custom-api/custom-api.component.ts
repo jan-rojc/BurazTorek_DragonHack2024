@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BleService } from 'src/app/services/ble.service';
 
 @Component({
   selector: 'app-custom-api',
@@ -7,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomApiComponent  implements OnInit {
 
-  constructor() { }
+  constructor(private bleService: BleService) { }
 
   ngOnInit() {}
 
+  async sendData(action: string) {
+    this.bleService.sendDataToDevice(action);
+  }
 }

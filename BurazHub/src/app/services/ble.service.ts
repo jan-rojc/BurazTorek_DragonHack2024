@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BleClient, BleDevice, textToDataView } from '@capacitor-community/bluetooth-le';
-import { BehaviorSubject } from 'rxjs';
+import { BleClient, BleDevice, dataViewToText, textToDataView } from '@capacitor-community/bluetooth-le';
+import { BehaviorSubject, Observable, Subject, catchError, interval, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,8 @@ export class BleService {
 
   private _connectionStatus$ = new BehaviorSubject<boolean>(false);
   connectionStatus$ = this._connectionStatus$.asObservable();
+  private dataSubject = new Subject<any>();
+  data$ = this.dataSubject.asObservable();
 
   constructor() { }
 
@@ -28,7 +30,7 @@ export class BleService {
 
       BleClient.requestLEScan(options, (device) => {
         if (device.device.name === this.deviceName) {
-          alert('Device found! ' + device.device.name);
+          // alert('Device found! ' + device.device.name);
           this.companionDevice = device.device;
           BleClient.stopLEScan();
         }
@@ -73,6 +75,37 @@ export class BleService {
         alert('Received value: ' + value.getUint8(0));
       }
     );
+  }
+
+  checkForData(): void {
+    interval(1000)
+      .subscribe(async () => {
+        const data = await this.getDataFromDevice();
+        if (data) {
+          // alert('Data received: ' + data);
+          this.dataSubject.next(data);
+        }
+      });
+  }
+
+  async getDataFromDevice() {
+    if (!this.companionDevice) {
+      this.noDeviceFound();
+      return;
+    }
+  
+    try {
+      const data = await BleClient.read(this.companionDevice.deviceId, this.SERVICE_UUID, this.CHARACTERISTIC_UUID);
+      const textData = dataViewToText(data);
+      // alert('Received value: ' + textData);
+      // if (textData === 'button_pressed') {
+      //   this.sendDataToDevice('off');
+      // }
+      return textData; // Assuming successful conversion, return data for emission
+    } catch (error) {
+      console.error('Error reading or converting data:', error);
+      return null; // Or handle error differently (e.g., emit an error object)
+    }
   }
 
   async disconnectFromDevice() {

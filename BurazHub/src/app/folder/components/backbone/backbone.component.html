@@ -5,14 +5,21 @@
     </ion-buttons>
     <ion-title>{{ folder }}</ion-title>
   </ion-toolbar>
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <!-- <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
+      <ion-title size="large">{{ statusMessage }}</ion-title>
     </ion-toolbar>
-  </ion-header>
-  <ion-button (click)="connect()">Connect</ion-button>
-  <router-outlet></router-outlet>
+  </ion-header> -->
+  <!-- <ion-button (click)="connect()">Connect</ion-button> -->
+  <div class="content">
+    <h3 class="status">{{ statusMessage }}</h3>
+    <router-outlet></router-outlet>
+    <div class="logo">
+      <img src="assets/logo.png" alt="BurazHub">
+    </div>
+  </div>
 </ion-content>

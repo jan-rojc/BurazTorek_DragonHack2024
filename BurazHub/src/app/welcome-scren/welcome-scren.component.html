@@ -1,0 +1,25 @@
+<ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+
+<div class="wrapper">
+    <div class="logo">
+        <img src="assets/logo.png" alt="BurazHub">
+    </div>
+    
+    <div class="actions">
+        <ion-button size="small" fill="outline" color="secondary"(click)="setTrue('phone')">
+            <ion-icon slot="start" [name]="phoneBtnClicked ? 'square' : 'square-outline'"></ion-icon>
+            Connect with phone
+        </ion-button>
+        <ion-button size="small" fill="outline" color="secondary" (click)="setTrue('computer')">
+            <ion-icon slot="start" [name]="computerBtnClicked ? 'square' : 'square-outline'"></ion-icon>
+            Connect with computer
+        </ion-button>
+        <ion-button size="small" fill="outline" color="secondary" (click)="setTrue('alexa')">
+            <ion-icon slot="start" [name]="alexaBtnClicked ? 'square' : 'square-outline'"></ion-icon>
+            Connect with Alexa
+        </ion-button>
+        <div class="nfc-icon">
+            <img src="assets/nfc.png" alt="NFC">
+        </div>
+    </div>
+</div>
