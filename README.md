@@ -40,7 +40,7 @@ Emphasize the user-friendly nature of **Smart Companion's** notification system.
 The flexibility of **Smart Companion** notification settings, allows users to customize alerts based on their preferences and priorities. From selecting notification patterns to setting up personalized alerts for specific events or contacts, your product offers a tailored user experience.
 
 ### Accessibility
-The inclusive design of **Smart Companion** caters to users with diverse needs and preferences. By providing non-visual notifications through light patterns, your product ensures accessibility for individuals with visual impairments or disabilities, promoting inclusivity and equal access to information.
+The inclusive design of **Smart Companion** caters to users with diverse needs and preferences. By providing non-visual notifications through light patterns, your product ensures accessibility for individuals with visual impairments or disabilities, promoting inclusivity and equal access to information. With its user friendly mobile app the device is easy to use amongst all age groups.
 
 ### Safety and Situational Awareness
 Mind the importance of safety and situational awareness facilitated by **Smart Companion**. Whether driving, exercising, or working in hazardous environments, users can stay connected without compromising their attention or endangering themselves or others. Your product enhances safety by delivering discreet notifications that keep users informed without distracting them from their surroundings.
