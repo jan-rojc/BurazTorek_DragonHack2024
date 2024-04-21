@@ -1,19 +1,16 @@
 <p align="center"><br><img src="smartCompanion%20logo%20design5-04.png"/></p>
 <h3 align="center">Buraz Torek Smart Companion</h3>
 <p align="center">
-  Smart gadget for personalized notifications 
+  Smart gadget for personalized notifications
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/maintenance/yes/2024?style=flat-square" />
-  <a href="https://github.com/capacitor-community/bluetooth-le/actions?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/actions/workflow/status/capacitor-community/bluetooth-le/main.yml?branch=main&style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/@capacitor-community/bluetooth-le"><img src="https://img.shields.io/npm/l/@capacitor-community/bluetooth-le?style=flat-square" /></a>
+  <img src="https://img.shields.io/badge/maintained-yes-green">
+  <img src="https://img.shields.io/badge/build-passing-green">
+  <img src="https://img.shields.io/badge/license-MIT-green">
 <br>
-  <a href="https://www.npmjs.com/package/@capacitor-community/bluetooth-le"><img src="https://img.shields.io/npm/dw/@capacitor-community/bluetooth-le?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/@capacitor-community/bluetooth-le"><img src="https://img.shields.io/npm/v/@capacitor-community/bluetooth-le?style=flat-square" /></a>
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-17-orange?style=flat-square" /></a>
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+  <img src="https://img.shields.io/badge/ionic-v6.0-blue">
+  <img src="https://img.shields.io/badge/communication-BLE-blue">
 </p>
 
 
@@ -50,7 +47,7 @@ By encouraging users to engage with technology in a more balanced and conscious 
 ### Energy awareness and smart home features
 In today's fast-paced world, we're constantly connected, but often at the cost of energy consumption. That's where we come in. Our cutting-edge wearable gadget combines seamless connectivity with energy awareness, revolutionizing how you stay informed. Say goodbye to constant screen-checking and hello to intuitive, energy-efficient notifications. With **Smart Companion**, you're not just staying connected – you're doing it responsibly. We can achieve this with the:
 - use of rechargable batteries
-- implementation of emerging communication standards like Bluetooth Low Energy (BLE) or Zigbee, and implement power-efficient protocols such as message queuing telemetry transport (MQTT) or CoAP (Constrained Application Protocol) for data exchange. 
+- implementation of emerging communication standards like Bluetooth Low Energy (BLE) or Zigbee, and implement power-efficient protocols such as message queuing telemetry transport (MQTT) or CoAP (Constrained Application Protocol) for data exchange.
 - Enhance the user experience by integrating machine learning algorithms that analyze usage data history and provide personalized energy-saving recommendations tailored to individual preferences and habits.
 
-Seamlessly connecting to your home Wi-Fi network, **Smart Companion** enhances your eco-conscious lifestyle by ensuring your home remains energy-efficient even when you're on the go. With our companion app on your smartphone, you'll receive real-time notifications the moment you leave home, alerting you if any smart appliances are inadvertently left powered on. This intelligent feature empowers you to take immediate action, remotely turning off appliances and minimizing unnecessary energy consumption with just a tap on your phone or device itself by the press of a button. 
+Seamlessly connecting to your home Wi-Fi network, **Smart Companion** enhances your eco-conscious lifestyle by ensuring your home remains energy-efficient even when you're on the go. With our companion app on your smartphone, you'll receive real-time notifications the moment you leave home, alerting you if any smart appliances are inadvertently left powered on. This intelligent feature empowers you to take immediate action, remotely turning off appliances and minimizing unnecessary energy consumption with just a tap on your phone or device itself by the press of a button.
