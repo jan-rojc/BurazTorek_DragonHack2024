@@ -1,4 +1,4 @@
-<p align="center"><br><img src="smartCompanion%20logo%20design-03.png"/></p>
+<p align="center"><br><img src="smartCompanion%20logo%20design4-04.png"/></p>
 <h3 align="center">Buraz Torek Smart Companion</h3>
 <p align="center"><strong><code>@capacitor-community/bluetooth-le</code></strong></p>
 <p align="center">
