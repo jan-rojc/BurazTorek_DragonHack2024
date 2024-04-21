@@ -7,22 +7,24 @@
 // Recieveing string commands:
 //  "blink"
 //  "toggle"
+//  "breathe"
+//  "loop_leds"
 
-// TODO
+
 // Animation states:
 //  "on"
 //  "off"
 //  "blink"
-//  "breathe" TODO
-//  "loop" TODO
+//  "breathe"
+//  "loop_leds"
 
 
+#define BUTTON_PIN 10
 
-#define LED_PIN 1
-// #define LED1_PIN 1
-// #define LED2_PIN 1
-// #define LED3_PIN 1
-// #define LED4_PIN 1
+#define LED1_PIN 1
+#define LED2_PIN 2
+#define LED3_PIN 3
+#define LED4_PIN 4
 
 #define SERVICE_UUID "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
 #define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
@@ -34,48 +36,126 @@ bool deviceConnected = false;
 std::string animationState = "blink";
 
 
+
 // LED functions
 void blink() {
-  Serial.println("Blinking LED");
-  digitalWrite(LED_PIN, HIGH);
+  analogWrite(LED1_PIN, 255);
   delay(1000);
-  digitalWrite(LED_PIN, LOW);
+  analogWrite(LED1_PIN, 0);
   delay(1000);
 }
 
-void toggle() {
-  Serial.println("Toggling LED");
-  if (animationState == "on") {
-    animationState = "off";
+void breathe(int min_val, int max_val) {
+  for (int i = min_val; i < max_val; i++) {
+    analogWrite(LED1_PIN, i);
+    analogWrite(LED2_PIN, i);
+    analogWrite(LED3_PIN, i);
+    analogWrite(LED4_PIN, i);
+    delay(5);
+  }
+  for (int i = max_val; i >= min_val; i--) {
+    analogWrite(LED1_PIN, i);
+    analogWrite(LED2_PIN, i);
+    analogWrite(LED3_PIN, i);
+    analogWrite(LED4_PIN, i);
+    delay(5);
+  }
+  delay(20);
+}
+
+
+int brightness(int value, int max_value) {
+  if (value > max_value) {
+    value = value % max_value;
+  }
+
+  if (value > max_value/2) {
+    value = max_value - value;
+  }
+
+  value = value - 32;
+  if (value < 0) {
+    value = 0;
+  }
+
+  return value;
+}
+
+void loop_leds(int max_value) {
+  int led1_shift = 0;
+  int led2_shift = max_value/4;
+  int led3_shift = max_value/2;
+  int led4_shift = 3*max_value/4;
+
+  for (int i = 0; i < max_value; i++) {
+    analogWrite(LED1_PIN, brightness(i + led1_shift, max_value));
+    analogWrite(LED2_PIN, brightness(i + led2_shift, max_value));
+    analogWrite(LED3_PIN, brightness(i + led3_shift, max_value));
+    analogWrite(LED4_PIN, brightness(i + led4_shift, max_value));
+    delay(5);
+    // Serial.print(brightness(i + led1_shift, max_value));
+    // Serial.print(" ");
+    // Serial.print(brightness(i + led2_shift, max_value));
+    // Serial.print(" ");
+    // Serial.print(brightness(i + led3_shift, max_value));
+    // Serial.print(" ");
+    // Serial.print(brightness(i + led4_shift, max_value));
+    // Serial.println();
+  }
+  // delay(50000);
+
+}
+
+
+// animation handler
+void animation(std::string state) {
+  if (state == "on") {
+    analogWrite(LED1_PIN, 255);
+  } else if (state == "off") {
+    analogWrite(LED1_PIN, 0);
+  } else if (state == "blink") {
+    blink();
+  } else if (state == "breathe") {
+    breathe(0, 128);
+  } else if (state == "loop_leds") {
+    loop_leds(512);
   } else {
-    animationState = "on";
+    Serial.println("Unknown animation state");
   }
 }
 
+
 void connected() {
   Serial.println("Connected");
-  digitalWrite(LED_PIN, HIGH);
+  analogWrite(LED1_PIN, 255);
   delay(100);
-  digitalWrite(LED_PIN, LOW);
+  analogWrite(LED1_PIN, 0);
   delay(100);
-  digitalWrite(LED_PIN, HIGH);
+  analogWrite(LED1_PIN, 255);
   delay(100);
-  digitalWrite(LED_PIN, LOW);
+  analogWrite(LED1_PIN, 0);
   delay(100);
-  digitalWrite(LED_PIN, HIGH);
+  analogWrite(LED1_PIN, 255);
   delay(100);
-  digitalWrite(LED_PIN, LOW);
+  analogWrite(LED1_PIN, 0);
   delay(100);
-  digitalWrite(LED_PIN, HIGH);
+  analogWrite(LED1_PIN, 255);
   delay(100);
-  digitalWrite(LED_PIN, LOW);
+  analogWrite(LED1_PIN, 0);
 }
 
 void advertising() {
   Serial.println("Advertising");
-  digitalWrite(LED_PIN, HIGH);
+  analogWrite(LED1_PIN, 255);
+  analogWrite(LED2_PIN, 255);
+  analogWrite(LED3_PIN, 255);
+  analogWrite(LED4_PIN, 255);
   delay(100);
-  digitalWrite(LED_PIN, LOW);
+  analogWrite(LED1_PIN, 0);
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 0);
+  delay(100);
 }
 
 class MyServerCallbacks : public NimBLEServerCallbacks
@@ -103,24 +183,47 @@ class MyCallbacks: public NimBLECharacteristicCallbacks {
     Serial.println(value.c_str());
 
     if (value == "blink") {
-      blink();
+      Serial.println("Blinking LED");
+      animationState = "blink";
     } else if (value == "toggle") {
-      toggle();
+      Serial.println("Toggling LED");
+      if (animationState == "on") {
+        animationState = "off";
+      } else {
+        animationState = "on";
+      }
+    } else if (value == "breathe") {
+      Serial.println("Breathing LED");
+      animationState = "breathe";
+    } else if (value == "loop_leds") {
+      Serial.println("Looping LEDs");
+      animationState = "loop_leds";
     } else {
       Serial.println("Unknown value received");
     }
+    Serial.print("animationState: ");
+    Serial.println(animationState.c_str());
   }
 };
 
 void setup()
 {
   Serial.begin(115200);
+  // Serial.begin(460800);
+
   // while(!Serial);  // wait for serial monitor to connect
 
   Serial.println("Starting BLE work!");
 
-  pinMode(LED_PIN, OUTPUT); // Set LED_PIN as output
-  digitalWrite(LED_PIN, LOW); // Initially turn off LED
+
+  pinMode(LED1_PIN, OUTPUT); // Set LED_PIN as output
+  pinMode(LED2_PIN, OUTPUT); // Set LED_PIN as output
+  pinMode(LED3_PIN, OUTPUT); // Set LED_PIN as output
+  pinMode(LED4_PIN, OUTPUT); // Set LED_PIN as output
+  analogWrite(LED1_PIN, 0); // Initially turn off LEDs
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 0);
 
   NimBLEDevice::init("BurazCompanion");
   pServer = NimBLEDevice::createServer();
@@ -138,14 +241,38 @@ void setup()
   pService->start();
   pServer->getAdvertising()->start();
   Serial.println("BLE server started");
+
+  pinMode(BUTTON_PIN, INPUT_PULLUP); // Set button pin as input with internal pull-up resistor
 }
 
 void loop()
 {
   // Blink LED when not connected
   if (!deviceConnected) {
+    // animation("blink");
     advertising();
+  } else {
+    animation(animationState);
   }
 
-  delay(1000);
+
+  // animation("blink");
+
+  // for (int i = 0; i < 128; i++) {
+  //   Serial.print(digitalRead(BUTTON_PIN));
+  //   Serial.print(" ");
+  //   Serial.println(i);
+  // }
+
+  // digitalWrite(LED1_PIN, HIGH);
+  // digitalWrite(LED2_PIN, HIGH);
+
+  if (digitalRead(BUTTON_PIN) == LOW) {
+    // digitalWrite(LED2_PIN, LOW);
+    Serial.println("BUTTON PRESSED");
+  }
+  // } else {
+  //   digitalWrite(LED2_PIN, HIGH);
+  // }
+  // delay(100);
 }
