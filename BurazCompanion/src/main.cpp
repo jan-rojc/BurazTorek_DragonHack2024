@@ -33,16 +33,36 @@ NimBLEServer *pServer = NULL;
 NimBLECharacteristic *pCharacteristic = NULL;
 
 bool deviceConnected = false;
-std::string animationState = "blink";
+std::string animationState = "off";
 
 
 
 // LED functions
+void on_leds() {
+  analogWrite(LED1_PIN, 255);
+  analogWrite(LED2_PIN, 255);
+  analogWrite(LED3_PIN, 255);
+  analogWrite(LED4_PIN, 255);
+}
+
+void off_leds() {
+  analogWrite(LED1_PIN, 0);
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 0);
+}
+
 void blink() {
   analogWrite(LED1_PIN, 255);
-  delay(1000);
+  analogWrite(LED2_PIN, 255);
+  analogWrite(LED3_PIN, 255);
+  analogWrite(LED4_PIN, 255);
+  delay(100);
   analogWrite(LED1_PIN, 0);
-  delay(1000);
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 0);
+  delay(100);
 }
 
 void breathe(int min_val, int max_val) {
@@ -65,6 +85,7 @@ void breathe(int min_val, int max_val) {
 
 
 int brightness(int value, int max_value) {
+  // returns beightness value between 0 and max_value/2
   if (value > max_value) {
     value = value % max_value;
   }
@@ -73,10 +94,11 @@ int brightness(int value, int max_value) {
     value = max_value - value;
   }
 
-  value = value - 32;
+  value = value - 96;
   if (value < 0) {
     value = 0;
   }
+  value = 255*value/159;  // normalize to 0-255
 
   return value;
 }
@@ -106,46 +128,8 @@ void loop_leds(int max_value) {
 
 }
 
-
-// animation handler
-void animation(std::string state) {
-  if (state == "on") {
-    analogWrite(LED1_PIN, 255);
-  } else if (state == "off") {
-    analogWrite(LED1_PIN, 0);
-  } else if (state == "blink") {
-    blink();
-  } else if (state == "breathe") {
-    breathe(0, 128);
-  } else if (state == "loop_leds") {
-    loop_leds(512);
-  } else {
-    Serial.println("Unknown animation state");
-  }
-}
-
-
 void connected() {
   Serial.println("Connected");
-  analogWrite(LED1_PIN, 255);
-  delay(100);
-  analogWrite(LED1_PIN, 0);
-  delay(100);
-  analogWrite(LED1_PIN, 255);
-  delay(100);
-  analogWrite(LED1_PIN, 0);
-  delay(100);
-  analogWrite(LED1_PIN, 255);
-  delay(100);
-  analogWrite(LED1_PIN, 0);
-  delay(100);
-  analogWrite(LED1_PIN, 255);
-  delay(100);
-  analogWrite(LED1_PIN, 0);
-}
-
-void advertising() {
-  Serial.println("Advertising");
   analogWrite(LED1_PIN, 255);
   analogWrite(LED2_PIN, 255);
   analogWrite(LED3_PIN, 255);
@@ -156,7 +140,60 @@ void advertising() {
   analogWrite(LED3_PIN, 0);
   analogWrite(LED4_PIN, 0);
   delay(100);
+  analogWrite(LED1_PIN, 255);
+  analogWrite(LED2_PIN, 255);
+  analogWrite(LED3_PIN, 255);
+  analogWrite(LED4_PIN, 255);
+  delay(100);
+  analogWrite(LED1_PIN, 0);
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 0);
+  delay(100);
+  analogWrite(LED1_PIN, 255);
+  analogWrite(LED2_PIN, 255);
+  analogWrite(LED3_PIN, 255);
+  analogWrite(LED4_PIN, 255);
+  delay(100);
+  analogWrite(LED1_PIN, 0);
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 0);
+  delay(100);
+  analogWrite(LED1_PIN, 255);
+  analogWrite(LED2_PIN, 255);
+  analogWrite(LED3_PIN, 255);
+  analogWrite(LED4_PIN, 255);
+  delay(100);
+  analogWrite(LED1_PIN, 0);
+  analogWrite(LED2_PIN, 0);
+  analogWrite(LED3_PIN, 0);
+  analogWrite(LED4_PIN, 0);
 }
+
+
+// animation handler
+void animation(std::string state) {
+  if (state == "on") {
+    on_leds();
+  } else if (state == "off") {
+    off_leds();
+  } else if (state == "blink") {
+    blink();
+  } else if (state == "breathe") {
+    breathe(0, 128);
+  } else if (state == "loop_leds") {
+    loop_leds(512);
+  } else if (state == "connected") {
+    connected();
+    animationState = "off";
+  } else {
+    Serial.println("Unknown animation state");
+  }
+}
+
+
+
 
 class MyServerCallbacks : public NimBLEServerCallbacks
 {
@@ -164,14 +201,13 @@ class MyServerCallbacks : public NimBLEServerCallbacks
   {
     Serial.println("Device connected");
     deviceConnected = true;
-    connected();
+    animationState = "connected";
   }
 
   void onDisconnect(NimBLEServer *pServer)
   {
     Serial.println("Device disconnected");
     deviceConnected = false;
-    connected();
   }
 };
 
@@ -249,14 +285,14 @@ void loop()
 {
   // Blink LED when not connected
   if (!deviceConnected) {
-    // animation("blink");
-    advertising();
+    Serial.println("Advertising");
+    animation("loop_leds");
   } else {
     animation(animationState);
   }
 
 
-  // animation("blink");
+  // animation("loop_leds");
 
   // for (int i = 0; i < 128; i++) {
   //   Serial.print(digitalRead(BUTTON_PIN));
@@ -269,8 +305,10 @@ void loop()
 
   if (digitalRead(BUTTON_PIN) == LOW) {
     // digitalWrite(LED2_PIN, LOW);
-    Serial.println("BUTTON PRESSED");
+    Serial.println("BUTTON PRESSED (leds off)");
+    animationState = "off";
   }
+
   // } else {
   //   digitalWrite(LED2_PIN, HIGH);
   // }
